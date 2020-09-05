@@ -155,5 +155,130 @@ aws iam list-users
     * Autoscaling group multi AZ
     * Load Balancer multi AZ     
 #### What is load balancing?
-* Load balancers are servers thet forward interenet traffic to multiple servers(EC2 Instances) downstream       
+* Load balancers are servers that forward interenet traffic to multiple servers(EC2 Instances) downstream   
+
+### Amazon S3
+* Ammazon s3 is the one of the main building blocks of AWS
+* it's advertised as "infinitely scaling" storage
+* many websites ude amazon s3 as a backbone
+* many aws services uses amazon s3 as an integration as well
+
+#### S3 Use cases
+* Backup and storage
+* Disaster recovery
+* Archive
+* Hybrid Cloud storage
+* Application storage
+* Media hosting
+* Data lakes & big data analytics
+* Software delivery
+* Static website
+
+#### S3 Security
+* User based
+    * IAM policies - which API calls should be allowed for a specific user from IAM console
+* Resource Based
+    * Bucket Policies - bucket wide rules from the s3 console - allows cross account
+    * Object access control list(ACL) - finer grain
+    * Bucket access control list(ACL) - less common
+#### S3 Static website hosting
+* S3 can host static websites and have them accessible on the www
+* The website URL will be:
+    * <bucket-name>.s3-website-<AWS-region>.amazonaws.com
+                        
+                        OR
+    * <bucket-name>.s3-website.<AWS-region>.amazonaws.com
+#### S3 Versioning    
+    
+* We can version our files in Amazon S3
+* it is enabled at the bucket level
+* same key overtime will increment the "version":1,2,3....
+* it is best practice to version our bucket
+    * Protect against unintented deletes(ability to restore a version)
+    * Easily rollback to previous version
+
+* Notes:
+    * ANy file that is not versioned prior to enabling versioing will have version "null"
+    * Suspending versioning doesnot delete the previous versions
+#### S3 Replication(CRR & SRR)
+* Must enable versioning in source and destination
+* Types:
+    * Cross Region Replication (CRR)
+    * Same Region Replication (SRR)
+
+* Buckets can be in different accounts
+* Copying is asynchronous
+* Must give proper IAM permissions to S3
+* CRR - Use cases: compliance, lower latency access, replication across accounts
+* SRR – Use cases: log aggregation, live replication between production and test accounts
+#### S3 Storage classes
+* Amazon S3 Standard - General Purpose
+* Amazon S3 Standard-Infrequent Access (IA)
+* Amazon S3 One Zone-Infrequent Access
+* Amazon S3 Intelligent Tiering
+* Amazon Glacier
+* Amazon Glacier Deep Archive
+* Amazon S3 Reduced Redundancy Storage (deprecated - omitted)
+
+##### S3 Standard – General Purposes
+* 99.99% Availability
+* Used for frequently accessed data
+* Low latency and high throughput
+* Sustain 2 concurrent facility failures
+* Use Cases: Big Data analytics, mobile & gaming applications, content
+distribution...
+
+##### S3 Standard – Infrequent Access (IA)
+* Suitable for data that is less frequently accessed, but requires rapid
+  access when needed
+* 99.9% Availability
+* Lower cost compared to Amazon S3 Standard, but retrieval fee
+* Sustain 2 concurrent facility failures
+* Use Cases: As a data store for disaster recovery, backups...
+
+##### S3 Intelligent-Tiering
+* 99.9% Availability
+* Same low latency and high throughput performance of S3 Standard
+* Cost-optimized by automatically moving objects between two access
+  tiers based on changing access patterns:
+* Frequent access
+* Infrequent access
+* Resilient against events that impact an entire Availability Zone
+
+##### S3 One Zone - Infrequent Access (IA)
+* Same as IA but data is stored in a single AZ
+* 99.5% Availability
+* Low latency and high throughput performance
+* Lower cost compared to S3-IA (by 20%)
+* Use Cases: Storing secondary backup copies of on-premise data, or
+  storing data you can recreate
+
+##### Amazon Glacier & Glacier Deep Archive
+* Low cost object storage (in GB/month) meant for archiving / backup
+* Data is retained for the longer term (years)
+* Various retrieval options of time + fees for retrieval:
+* Amazon Glacier – cheap:
+* Expedited (1 to 5 minutes)
+* Standard (3 to 5 hours)
+* Bulk (5 to 12 hours)
+* Amazon Glacier Deep Archive – cheapest:
+* Standard (12 hours)
+* Bulk (48 hours)
+
+#### AWS Storage Gateway
+* Bridge between on-premise data and cloud
+  data in S3
+* Hybrid storage service to allow on-
+  premises to seamlessly use the AWS Cloud
+* Use cases: disaster recovery, backup &
+  restore, tiered storage
+* Types of Storage Gateway:
+* File Gateway
+* Volume Gateway
+* Tape Gateway
+* No need to know the types at the exam
+
+  
+
+
 
