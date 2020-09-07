@@ -444,7 +444,7 @@ distribution...
   it means we just don’t manage / provision / see them
 
 #### Lambda vs EC2
-![images](/lambda.png?raw=true "Title") 
+![images](images/lambda.png?raw=true "Title") 
 
 #### AWS Batch
 * Fully managed batch processing at any scale
@@ -457,7 +457,7 @@ distribution...
 * Helpful for cost optimizations and focusing less on the infrastructure
 
 #### Batch vs Lambda
-![images](/batchvslambda.png?raw=true "Title")
+![images](images/batchvslambda.png?raw=true "Title")
 
 #### Amazon Lightsail
 * Simpler alternative to using EC2, RDS, ELB, EBS, Route 53
@@ -557,7 +557,7 @@ We want to deploy our application automatically
 * Works for both Windows and Linux OS
 
 #### How system manager works
-![images](/ssm.png?raw=true "Title")
+![images](images/ssm.png?raw=true "Title")
 
 #### AWS Opsworks
 * Chef & Puppet help you perform server configuration automatically, or
@@ -570,7 +570,7 @@ We want to deploy our application automatically
 * In the exam: Chef or Puppet needed => AWS OpsWorks
 
 #### OpsWorks Architecture
-![images](/opsworks.png?raw=true "Title")
+![images](images/opsworks.png?raw=true "Title")
 
 #### Deployment summary
 * CloudFormation: (AWS only)
