@@ -559,6 +559,30 @@ We want to deploy our application automatically
 #### How system manager works
 ![images](/ssm.png?raw=true "Title")
 
+#### AWS Opsworks
+* Chef & Puppet help you perform server configuration automatically, or
+  repetitive actions
+* They work great with EC2 & On-Premises VM
+* AWS OpsWorks = Managed Chef & Puppet
+* It’s an alternative to AWS SSM
+* Only provision standard AWS resources:
+* EC2 Instances, Databases, Load Balancers, EBS volumes...
+* In the exam: Chef or Puppet needed => AWS OpsWorks
+
+#### OpsWorks Architecture
+![images](/opsworks.png?raw=true "Title")
+
+#### Deployment summary
+* CloudFormation: (AWS only)
+  * Infrastructure as Code, works with almost all of AWS resources
+  * Repeat across Regions & Accounts
+* Beanstalk: (AWS only)
+  * Platform as a Service (PaaS), limited to certain programming languages or Docker
+  * Deploy code consistently with a known architecture: ex, ALB + EC2 + RDS
+* CodeDeploy (hybrid): deploy & upgrade any application onto servers
+* Systems Manager (hybrid): patch, configure and run commands at scale
+* OpsWorks (hybrid): managed Chef and Puppet in AWS
+
 
   
     
