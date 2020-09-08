@@ -570,7 +570,7 @@ We want to deploy our application automatically
 * In the exam: Chef or Puppet needed => AWS OpsWorks
 
 #### OpsWorks Architecture
-![images](images/opsworks.png?raw=true "Title")
+![images](images/opsworrks.png?raw=true "Title")
 
 #### Deployment summary
 * CloudFormation: (AWS only)
@@ -583,19 +583,163 @@ We want to deploy our application automatically
 * Systems Manager (hybrid): patch, configure and run commands at scale
 * OpsWorks (hybrid): managed Chef and Puppet in AWS
 
+### AWS Global Infrastructure
+#### Global aws infrastructure
+* Regions : For deploying applications and infrastructure
+* Availablilty zones:Made of multiple data centers\
+* Edge locations(Point of presence):For content delivery as close as possible to users
+#### Global Applications in AWS
+* Global DNS: Route 53
+* Great to route users to the closest deployment with least latency
+* Great for disaster recovery strategies
+* Global Content Delivery Network (CDN): CloudFront
+* Replicate part of your application to AWS Edge Locations – decrease latency
+* Cache common requests – improved user experience and decreased latency
+* S3 Transfer Acceleration
+* Accelerate global uploads & downloads into Amazon S3
+* AWS Global Accelerator:
+* Improve global application availability and performance using the AWS global
+  network
 
-  
-    
-   
+#### Amazon route 53 overview
+* Route 53 is a managed domain name system (DNS)
+* DNS is a collection of rules and records which helps clients understand how to reach a server through URLs 
+* In AWS, the most common records are:
+  * www.google.com => 12.34.56.78 == A record (IPv4)
+  * www.google.com => 2001:0db8:85a3:0000:0000:8a2e:0370:7334 == AAAA IPv6
+  * search.google.com => www.google.com == CNAME: hostname to hostname
+  * example.com => AWS resource == Alias (ex: ELB, CloudFront, S3, RDS, etc...)
 
-  
+![images](images/route53.png?raw=true "Title")
+
+#### Route 53 routing policies
+1. Simple routing policy
+2. Weighted routing policy
+3. Latency routing policy
+4. Failover routing policy
+
+#### Simple Routing
+![images](images/simpleRouting.png?raw=true "Title")
+
+#### Weighted Routing
+![images](images/weightiedrouting.png?raw=true "Title")
+
+#### Latency Routing
+![images](images/latencyRouting.png?raw=true "Title")
+
+#### Failover Routing
+![images](images/failoverRouting.png?raw=true "Title")
+
+#### AWS Cloudfront
+![images](images/Cloudfront.png?raw=true "Title")
+* Content Delivery Network (CDN)
+* Improves read performance, content is cached at the edge
+* Improves users experience
+* 216 Point of Presence globally (edge locations)
+* DDoS protection (because worldwide), integration with Shield, AWS Web Application Firewall
+
+### CloudFront – Origins
+* S3 bucket:
+  * For distributing files and caching them at the edge
+  * Enhanced security with CloudFront Origin Access Identity (OAI)
+  * CloudFront can be used as an ingress (to upload files to S3)
+
+* Custom Origin (HTTP)
+  * Application Load Balancer
+  * EC2 instance
+  * S3 website (must first enable the bucket as a static S3 website)
+  * Any HTTP backend you want
+
+#### CloudFront vs S3 Cross Region Replication
+* CloudFront:
+  * Global Edge network
+  * Files are cached for a TTL (maybe a day)
+  * Great for static content that must be available everywhere
+* S3 Cross Region Replication:
+  * Must be setup for each region you want replication to happen
+  * Files are updated in near real-time
+  * Read only
+  * Great for dynamic content that needs to be available at low-latency in few regions
+
+#### S3 Transfer Acceleration
+* Increase transfer speed by transferring file to an AWS edge location which will forward the data to the S3 bucket in the target region
+
+ ![images](images/s3transferAcceleration.png?raw=true "Title")
+
+#### AWS Global accelerator
+![images](images/globalAccelerator.png?raw=true "Title")
+* Improve global application availablity and performnace using AWS global network
+* Leverage the aws internal network to optimize the route to your application (60% improvement)
+* 2 Anycast IP are created for your Private AWS application and traffic is sent through Edge Locations
+* The Edge locations send the traffic to your application
+
+#### AWS Global Accelerator vs CloudFront
+* They both use the AWS global network and its edge locations around the world
+* Both services integrate with AWS Shield for DDoS protection.
+* CloudFront – Content Delivery Network
+* Improves performance for your cacheable content (such as images and videos)
+* Content is served at the edge
+* Global Accelerator
+* No caching, proxying packets at the edge to applications running in one or more AWS Regions.
+* Improves performance for a wide range of applications over TCP or UDP
+* Good for HTTP use cases that require static IP addresses
+* Good for HTTP use cases that required deterministic, fast regional failover
+
+#### Global Applications in AWS - Summary
+* Global DNS: Route 53
+* Great to route users to the closest deployment with least latency
+* Great for disaster recovery strategies
+* Global Content Delivery Network (CDN): CloudFront
+* Replicate part of your application to AWS Edge Locations – decrease latency
+* Cache common requests – improved user experience and decreased latency
+* S3 Transfer Acceleration
+* Accelerate global uploads & downloads into Amazon S3
+* AWS Global Accelerator:
+* Improve global application availability and performance using the AWS global network
+
+### Cloud Integrations
+* When we start deploying multiple applications, they will inevitably need to communicate with one another
+* There are two patterns of application communication
+1. Synchronus
+
+![images](images/sync.png?raw=true "Title")
+
+2. Asynchronus
+
+![images](images/async.png?raw=true "Title")
 
 
+* Synchronous between applications can be problematic if there are sudden spikes of traffic
+*  if we need to suddenly encode 1000 videos but usually it’s 10 It’s better to decouple applications :
+  * using SQS: queue model
+  * using SNS: pub/sub model
+  * using Kinesis: real-time data streaming model (out of scope for the exam)
+  * These services can scale independently from our application!
 
+![images](images/SQS.png?raw=true "Title")
 
+#### SQS Decoupling
+![images](images/SQS Decoupling.png?raw=true "Title")
 
+#### Amazon SQS – Standard Queue
+* Oldest AWS offering (over 10 years old)
+* Fully managed service (~serverless), use to decouple applications
+* Scales from 1 message per second to 10,000s per second
+* Default retention of messages: 4 days, maximum of 14 days
+* No limit to how many messages can be in the queue
+* Messages are deleted after they’re read by consumers
+* Low latency (<10 ms on publish and receive)
+* Consumers share the work to read messages & scale horizontally
 
-
-
-
+#### Amazon SNS (Simple notification service)
+* If we need to send one message to many users we can use SNS
+![images](images/SNS.png?raw=true "Title")
+* The “event publishers” only sends message to one SNS topic
+* As many “event subscribers” as we want to listen to the SNS topic notifications
+* Each subscriber to the topic will get all the messages
+* Up to 10,000,000 subscriptions per topic, 100,000 topics limit
+* SNS Subscribers can be:
+  * HTTP / HTTPS (with delivery retries – how many times)
+  * Emails, SMS messages, Mobile Notifications
+  * SQS queues (fan-out pattern), Lambda Functions (write-your-own integration)
 
