@@ -833,7 +833,7 @@ VPC - Virtual Private Cloud: private network to deploy your resources (regional 
 * To define access to the internet and between subnets, we use Route Tables.
 ![images](images/VPC.png?raw=true "Title")
 
-#### INternet gateway & NAT gateways
+#### Internet gateway & NAT gateways
 * Internet Gateways helps our VPC instances connect with the internet
 * Public Subnets have a route to the internet gateway.
 * NAT Gateways (AWS-managed) & NAT Instances (self-managed) allow your instances in your Private Subnets to access the internet while remaining private
