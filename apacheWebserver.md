@@ -94,11 +94,30 @@ var/log/httpd/*
 1. cd/etc/httpd/conf.d
 2. vi conf.d
 3. Listen 8080
-<VirtualHost *:8080>
-DocumentRoot "path"
-ServerName <>
-</VirtualHost>
+  <VirtualHost *:8080>
+  DocumentRoot "path"
+  ServerName <>
+  </VirtualHost>
 4. httpd -t - to check the configuration is correct
 5. systemctl reload httpd
 6. firewall-cmd --permanent --add-port=<port number>/tcp - to allow the port
 7. firewall-cmd --reload
+8. sudo firewall-cmd --list-all - to view opened ports
+
+#### Apache as a reverse proxy
+1. /etc/httpd/conf.d/default-site.conf  - Create default-site.conf file 
+3.
+```
+<VirtualHost *:80>
+    ServerName yourproject.com
+    ProxyRequests Off
+    ProxyPreserveHost On
+    ProxyVia Full
+    <Proxy *>
+        Require all granted
+    </Proxy>
+    ProxyPass / http://127.0.0.1:3000/
+    ProxyPassReverse / http://127.0.0.1:3000/
+</VirtualHost>
+``` 
+3. sudo systemctl reload httpd
