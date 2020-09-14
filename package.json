@@ -1,0 +1,19 @@
+{
+  "name": "aws",
+  "version": "1.0.0",
+  "description": "* Infrastrucure as a service(IaaS)\r     * Provide building blocks for cloud IT\r     * Provides networking, computers, data storage space\r     * Highest level of flexibility\r     * Easy parallel with traditional on-premises IT\r * Platform as a service(PaaS) \r     * Removes the need for wer organization to manage the underlying infrastructure\r     * Focus on the deployment and management of wer applications\r * Software as a service(SaaS)\r     * Completed product that is run and managed by the service provider    \r ### AWS Regions\r * AWS has regions all around the world\r * Names can be us-east-l, eu-west-3...\r * A region is a cluster of data centers\r * Most AWS services are region-scoped",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arjune64/aws.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arjune64/aws/issues"
+  },
+  "homepage": "https://github.com/arjune64/aws#readme"
+}
