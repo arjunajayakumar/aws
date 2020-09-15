@@ -121,3 +121,10 @@ var/log/httpd/*
 </VirtualHost>
 ``` 
 3. sudo systemctl reload httpd
+
+#### Configuring alias for a url
+```
+<VirtualHost>
+Alias /img /var/www/html/img
+</VirtualHost>
+```
